@@ -23,6 +23,7 @@
     "bundle:plugin": "webpack --config scripts/webpack.prod.plugins.js",
     "bundle": "npm-run-all bundle:main bundle:plugin",
     "preghpages": "rimraf ./.tmp",
+    "test2": "rimraf ./'.",
     "ghpages": "webpack --config ./scripts/webpack.ghpages.js",
     "deploy": "./scripts/deploy.sh",
     "test": "npm run lint && tsc --noEmit",
