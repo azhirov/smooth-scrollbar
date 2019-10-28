@@ -14,13 +14,14 @@ export class TrackController implements I.TrackController {
   constructor(
     private _scrollbar: I.Scrollbar,
   ) {
+    this._scrollbar = _scrollbar;
     const thumbMinSize = _scrollbar.options.thumbMinSize;
 
-    this.xAxis = new ScrollbarTrack(TrackDirection.X, thumbMinSize);
-    this.yAxis = new ScrollbarTrack(TrackDirection.Y, thumbMinSize);
+    this.xAxis = new ScrollbarTrack(TrackDirection.X, thumbMinSize, _scrollbar.containerEl);
+    this.yAxis = new ScrollbarTrack(TrackDirection.Y, thumbMinSize, _scrollbar.containerEl);
 
-    this.xAxis.attachTo(_scrollbar.containerEl);
-    this.yAxis.attachTo(_scrollbar.containerEl);
+    // this.xAxis.attachTo(_scrollbar.containerEl);
+    // this.yAxis.attachTo(_scrollbar.containerEl);
 
     if (_scrollbar.options.alwaysShowTracks) {
       this.xAxis.show();

@@ -12,7 +12,7 @@
     "clean:compile": "rimraf ./build",
     "clean:dist": "rimraf ./dist",
     "clean": "npm-run-all clean:compile clean:dist",
-    "copy:src": "cpx './src/**' ./build/src",
+    "copy:src": "cpx ./src/** ./build/src",
     "copy:conf": "cpx ./tsconfig.json ./build",
     "copy": "npm-run-all copy:src copy:conf",
     "precompile": "npm-run-all clean:compile copy",
