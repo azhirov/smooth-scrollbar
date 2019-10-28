@@ -138,16 +138,33 @@ export class Scrollbar implements I.Scrollbar {
     containerEl: HTMLElement,
     options?: Partial<I.ScrollbarOptions>,
   ) {
+
+    this.offset = {
+      x: 0,
+      y: 0,
+    };
+    this.limit = {
+      x: Infinity,
+      y: Infinity,
+    };
+    this.bounding = {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    };
+    this._plugins = [];
+    this._momentum = { x: 0, y: 0 };
+    this._listeners = new Set();
     this.containerEl = containerEl;
-    const contentEl = this.contentEl = document.createElement('div');
+    let contentEl = this.contentEl = containerEl.querySelector('[data-scrollbar-content]') as HTMLElement;
 
     this.options = new Options(options);
 
     // mark as a scroll element
     containerEl.setAttribute('data-scrollbar', 'true');
 
-    // make container focusable
-    containerEl.setAttribute('tabindex', '-1');
+    containerEl.setAttribute('tabindex', '1');
     setStyle(containerEl, {
       overflow: 'hidden',
       outline: 'none',
@@ -159,15 +176,6 @@ export class Scrollbar implements I.Scrollbar {
       containerEl.style.msTouchAction = 'none';
     }
 
-    // mount content
-    contentEl.className = 'scroll-content';
-
-    Array.from(containerEl.childNodes).forEach((node) => {
-      contentEl.appendChild(node);
-    });
-
-    containerEl.appendChild(contentEl);
-
     // attach track
     this.track = new TrackController(this);
 
@@ -178,7 +186,8 @@ export class Scrollbar implements I.Scrollbar {
     this._plugins = initPlugins(this, this.options.plugins);
 
     // preserve scroll offset
-    const { scrollLeft, scrollTop } = containerEl;
+    const scrollLeft = containerEl.scrollLeft;
+    const scrollTop = containerEl.scrollTop;
     containerEl.scrollLeft = containerEl.scrollTop = 0;
     this.setPosition(scrollLeft, scrollTop, {
       withoutCallbacks: true,
