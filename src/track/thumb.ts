@@ -53,10 +53,10 @@ export class ScrollbarThumb implements I.ScrollbarThumb {
     // calculate thumb offset
     this.offset = scrollOffset / pageSize * (containerSize + (this.realSize - this.displaySize));
 
-    setStyle(this.element, this._getStyle());
+    setStyle(this.element, this._getStyle(containerSize));
   }
 
-  private _getStyle() {
+  private _getStyle(containerSize) {
     switch (this._direction) {
       case TrackDirection.X:
         return {
@@ -66,7 +66,7 @@ export class ScrollbarThumb implements I.ScrollbarThumb {
 
       case TrackDirection.Y:
         return {
-          height: `${this.displaySize}px`,
+          height: `${100 * containerSize / this.displaySize}%`,
           '-transform': `translate3d(0, ${this.offset}px, 0)`,
         };
 
