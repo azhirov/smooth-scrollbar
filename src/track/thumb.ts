@@ -47,12 +47,12 @@ export class ScrollbarThumb implements I.ScrollbarThumb {
   ) {
     // calculate thumb size
     // pageSize > containerSize -> scrollable
-    this.realSize = Math.min(containerSize / pageSize, 1) * containerSize;
+    this.realSize = Math.min((containerSize - 8) / pageSize, 1) * (containerSize - 8);
     this.displaySize = Math.max(this.realSize, this._minSize);
 
     // calculate thumb offset
-    this.offset = scrollOffset / pageSize * (containerSize + (this.realSize - this.displaySize));
-    setStyle(this.element, this._getStyle(containerSize));
+    this.offset = scrollOffset / pageSize * (containerSize - 8 + (this.realSize - this.displaySize));
+    setStyle(this.element, this._getStyle(containerSize - 8));
   }
 
   private _getStyle(containerSize) {
