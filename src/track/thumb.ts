@@ -55,8 +55,8 @@ export class ScrollbarThumb implements I.ScrollbarThumb {
     console.log('pageSize: ' + pageSize);
     console.log('scrollOffset: ' + scrollOffset);
     // calculate thumb offset
-    this.offset = scrollOffset / pageSize * (containerSize - 8 + (this.realSize - this.displaySize));
-    setStyle(this.element, this._getStyle(containerSize - 8));
+    this.offset = scrollOffset / pageSize * (containerSize - 16 + (this.realSize - this.displaySize));
+    setStyle(this.element, this._getStyle(containerSize));
   }
 
   private _getStyle(containerSize) {
